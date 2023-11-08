@@ -5,6 +5,7 @@ import { selectIsDarkMode } from '../redux/reducers/appSlice'
 import { MD3LightTheme ,MD3DarkTheme, PaperProvider, useTheme, ThemeProvider } from 'react-native-paper';
 import { Provider, useDispatch, useSelector } from 'react-redux';
 import { customDarkColors, customLightColors } from '../helper/themeColors';
+import CustomDialog from '../components/CustomDialog';
 
 
 const AppProvider = () => {
@@ -30,7 +31,7 @@ const darkSchemes={
   return (
     <ThemeProvider theme={theme}>
       <StatusBar backgroundColor={theme.colors.primary} barStyle={theme.colors.text}/>
-    
+      {/* <CustomDialog/> */}
       <Routes/>
      </ThemeProvider>
 

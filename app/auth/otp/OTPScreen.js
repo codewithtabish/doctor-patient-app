@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, TextInput, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, TextInput, StyleSheet, TouchableOpacity, StatusBar } from 'react-native';
 import { Text, useTheme } from 'react-native-paper';
 import { responsiveScreenWidth, responsiveScreenHeight, responsiveScreenFontSize } from 'react-native-responsive-dimensions';
 import { useNavigation, useRoute } from '@react-navigation/native';
@@ -7,6 +7,7 @@ import { verifyUserMethod } from '../../services/apiMethods';
 import { useToast } from "react-native-toast-notifications";
 import { useDispatch } from 'react-redux';
 import { assignToLoginState, assignToLoginToken } from '../../redux/reducers/userSlice';
+import { assignToDialouge } from '../../redux/reducers/appSlice';
 
 const OTPScreen = () => {
   const [otp, setOtp] = useState(['', '', '', '']);
@@ -57,15 +58,17 @@ const OTPScreen = () => {
     
     const response = await verifyUserMethod({ fourCode: enteredOTP, email });
     console.log("RESPONSE HERE IS",response);
-
-    if (response.status === "failed") {
-   return   toast.show(response.message, {
+    dispatch(assignToDialouge(true))
+    setTimeout(() => {
+       if (response.status === "failed") {
+      toast.show(response.message, {
         type: "error",
         placement: "top",
         duration: 4000,
         offset: 30,
         animationType: "slide-in | zoom-in",
       });
+      dispatch(assignToDialouge(false))
     }
 
     if(response.status==="success"){
@@ -76,11 +79,16 @@ const OTPScreen = () => {
         offset: 30,
         animationType: "slide-in | zoom-in",
       });
+      dispatch(assignToDialouge(false))
       dispatch(assignToLoginState(true))
       dispatch(assignToLoginToken(response?.token))
       return
       
     }
+      
+    }, 5000);
+
+   
   }
 
 
@@ -91,7 +99,9 @@ const OTPScreen = () => {
     .map(() => React.createRef());
 
   return (
-    <View style={styles.container}>
+    <>
+        <StatusBar backgroundColor={theme.colors.primary} barStyle={theme.colors.text}/>
+       <View style={styles.container}>
       <View style={{ width: responsiveScreenWidth(80), flexDirection: 'column', gap: responsiveScreenHeight(1), justifyContent: 'center' }}>
         <Text style={{ color: theme.colors.text, fontSize: responsiveScreenFontSize(2.9), fontWeight: '800', textAlign: 'center' }}>Verification !</Text>
         <Text style={{ color: theme.colors.text, textAlign: 'center', color: 'gray' }}>
@@ -133,6 +143,8 @@ const OTPScreen = () => {
       {/* )} */}
 
     </View>
+    </>
+ 
   );
 };
 

@@ -5,15 +5,20 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import SignUpScreen from '../auth/Signup/SignUpScreen';
 import LoginScreen from '../auth/login/LoginScreen';
 import OTPScreen from '../auth/otp/OTPScreen';
+import OnBoardScreen from '../auth/OnBoard/OnBoardScreeen';
 
 
 
-const Stack = createNativeStackNavigator();
+const Stack = createNativeStackNavigator()
+
 
 const AuthRouter = () => {
   return (
        <NavigationContainer>
       <Stack.Navigator>
+        <Stack.Screen name='ONBoard' component={OnBoardScreen}
+           options={{headerShown:false}}
+        />
         <Stack.Screen name="SignUp" component={SignUpScreen}
         options={{headerShown:false}}
          />

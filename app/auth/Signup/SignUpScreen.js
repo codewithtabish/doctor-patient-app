@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { ScrollView, StatusBar, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { TextInput,IconButton,useTheme } from 'react-native-paper';
 import {
   responsiveHeight,
@@ -8,7 +8,7 @@ import {
   responsiveScreenWidth,
 } from 'react-native-responsive-dimensions';
 import { useDispatch, useSelector } from 'react-redux';
-import { selectFavArray, selectIsDarkMode, toggleAppMode } from '../../redux/reducers/appSlice';
+import { assignToDialouge, selectFavArray, selectIsDarkMode, toggleAppMode } from '../../redux/reducers/appSlice';
 import { useNavigation } from '@react-navigation/native';
 import { signupUser } from '../../services/apiMethods';
 import { BaseURL } from '../../services/helper';
@@ -49,19 +49,24 @@ const SignUpScreen = () => {
       // setDialogVisible(true)
       // console.log(fullName,email,password,mobile)
     }
-    // console.log("object",email)
-   const response=await signupUser({fullName,email,mobile,password})
+    dispatch(assignToDialouge(true))
+    setTimeout(async() => {
+         const response=await signupUser({fullName,email,mobile,password})
       if(response?.errors?.length>0){
-      return   toast.show(response?.errors[0]?.msg,{
+         toast.show(response?.errors[0]?.msg,{
         type:"warning",
         placement: "top",
          duration: 5000,
         offset: 30,
        animationType: "slide-in | zoom-in",
       })
+       dispatch(assignToDialouge(false))
+
+       return
+      
     }
     if(response?.status==="failed"){
-    return  toast.show(response.message,{
+      toast.show(response.message,{
          type:"warning",
         placement: "top",
          duration: 4000,
@@ -70,6 +75,9 @@ const SignUpScreen = () => {
     
 
       })
+      dispatch(assignToDialouge(false))
+
+       return
     }
     if(response?.status==="success"){
     toast.show(response.message,{
@@ -81,15 +89,19 @@ const SignUpScreen = () => {
     
 
       })
+      dispatch(assignToDialouge(false))
+
       navi.navigate("OTP",{
         email:email
       })
       return
 
     }
+      
+    }, 5000)
+
      
     
-    console.log(response)
   
   }
 
@@ -104,6 +116,7 @@ const SignUpScreen = () => {
 
   return (
    <>
+   <StatusBar backgroundColor={theme.colors.primary} barStyle={theme.colors.text}/>
     <View style={{ flex: 1, backgroundColor: '#fff' }}>
       {/* {isLogin && <Text>THIS IS ONE OF THE BEST DATA</Text>} */}
       <Text>{favArray.length}</Text>
@@ -327,9 +340,7 @@ const SignUpScreen = () => {
         </TouchableOpacity>
       </View>
     </View>
-    <CustomDialog isDialogVisible={isDialogVisible} setDialogVisible={setDialogVisible}
-    errorTtitle={errorTtitle} errorSubtitle={errorSubtitle}
-    iconName={iconName}/>
+    <CustomDialog/>
    </>
   );
 };

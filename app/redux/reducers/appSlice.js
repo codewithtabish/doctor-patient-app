@@ -4,7 +4,8 @@
     initialState:{
         isDarkMode:false,
         favArray:["a","a"],
-        bannerImage:null
+        bannerImage:null,
+        appDialouge:false
 
     },
     reducers:{
@@ -16,6 +17,9 @@
         },
         assignToBannerImage:(state,action)=>{
             state.bannerImage=action.payload
+        },
+        assignToDialouge:(state,action)=>{
+            state.appDialouge=action.payload
         }
    
 
@@ -24,7 +28,8 @@
  })
 
 
- export const {toggleAppMode,assignToFavArray,assignToBannerImage}=appSlice.actions
+ export const {toggleAppMode,assignToFavArray,assignToBannerImage,
+assignToDialouge}=appSlice.actions
 
  export const selectIsDarkMode = (state) => state.app.isDarkMode;
  export const selectFavArray = (state) => state.app.favArray;
