@@ -32,7 +32,7 @@ export const verifyUserMethod=async(data)=>{
 
 
 export const allUsers=async()=>{
-    const response=await commonRequest('GET',`${BaseURL}/user/users`)
+    const response=await commonApiMethod('GET',`${BaseURL}/user/users`)
     return response
 
 
@@ -41,7 +41,7 @@ export const allUsers=async()=>{
 
 
 export const loginUser=async(data)=>{
-    const response=await commonApiMethod('POST',`${BaseURL}/user/login`,data)
+    const response=await commonApiMethod('POST',`${BaseURL}/user/login`,null,data)
     return response
 
 }
@@ -50,7 +50,7 @@ export const loginUser=async(data)=>{
 
 
 export const getLoginUserData=async(header)=>{
-   const response=await commonRequest('GET',`${BaseURL}/user/loginData`,null,header)
+   const response=await commonApiMethod('GET',`${BaseURL}/user/me`,null,header)
    return response
 }
 
@@ -58,14 +58,14 @@ export const getLoginUserData=async(header)=>{
 // FOR POST API METHOD 
 
 export const getAllPosts=async()=>{
-    const response=await commonRequest('GET',`${BaseURL}/post/posts`)
+    const response=await commonApiMethod('GET',`${BaseURL}/post/posts`)
 
     return response
 }
 
 
 export const createPost=async(data,headers)=>{
-    const response=await commonRequest('POST',`${BaseURL}/post/createPost`,data,headers)
+    const response=await commonApiMethod('POST',`${BaseURL}/post/createPost`,data,headers)
     return response
 
 }

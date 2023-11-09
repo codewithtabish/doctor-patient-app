@@ -33,7 +33,8 @@ export const customDarkColors = {
   lineColor:"#ddd",
   primaryText: '#FFFFFF' ,// White text for purple background
    grayColor:"#333333",
-   iconColor:"#f2a0b3"
+   iconColor:"#f2a0b3",
+    cardText: '#333333'
   // For Purple (#cf6679)
 
 };

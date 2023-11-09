@@ -11,6 +11,7 @@
   "dependencies": {
     "@react-native-clipboard/clipboard": "^1.12.1",
     "@react-native-community/clipboard": "^1.5.1",
+    "@react-navigation/bottom-tabs": "^6.5.11",
     "@react-navigation/native": "^6.1.9",
     "@react-navigation/native-stack": "^6.9.16",
     "@reduxjs/toolkit": "^1.9.7",

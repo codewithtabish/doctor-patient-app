@@ -3,8 +3,9 @@ import { createSlice } from "@reduxjs/toolkit";
 const userSlice=createSlice({
     name:"user",
     initialState:{
-        isLogin:false,
-        loginToken:null
+        isLogin:true,
+        loginToken:null,
+        loginUser:{}
     },
     reducers:{
         assignToLoginState:(state,action)=>{
@@ -12,6 +13,9 @@ const userSlice=createSlice({
         },
         assignToLoginToken:(state,action)=>{
             state.loginToken=action.payload
+        },
+        assignToLoginUserData:(state,action)=>{
+            state.loginUser=action.payload
         }
     }
 
@@ -20,7 +24,7 @@ const userSlice=createSlice({
 
 
 
-export const {assignToLoginState,assignToLoginToken} =userSlice.actions
+export const {assignToLoginState,assignToLoginToken,assignToLoginUserData} =userSlice.actions
 
 // export const selectIsLoginFlow = (state) => state.app.isLogin;
 
